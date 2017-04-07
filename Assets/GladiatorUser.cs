@@ -8,7 +8,7 @@ public class GladiatorUser : Gladiator {
 	void Start () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
-		animator.SetBool ("Searching", true);
+		//animator.SetBool ("Searching", true);
 	}
 	
 	// Update is called once per frame
