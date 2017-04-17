@@ -8,6 +8,11 @@ public class GladiatorUser : Gladiator {
 	void Start () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
+		GameEvents.Instance.gladiatorUserLifeBar.owner = this;
+		GameEvents.Instance.gladiatorUserStaminaBar.owner = this;
+		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
+		GameEvents.Instance.gladiatorUserStaminaBar.UpdateBar ();
+		rival = GameEvents.Instance.gladiatorAI;
 		//animator.SetBool ("Searching", true);
 	}
 	
@@ -51,6 +56,7 @@ public class GladiatorUser : Gladiator {
 			stamina -= 25;
 			animator.SetBool ("Blocking", true);
 		}
+		GameEvents.Instance.gladiatorUserStaminaBar.UpdateBar ();
 	}
 
 	public void DrawAttackType()
@@ -75,6 +81,7 @@ public class GladiatorUser : Gladiator {
 
 		if (life < 0)
 			life = 0;
+		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
 	}
 		
 	public override void DrawNextOption()

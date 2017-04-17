@@ -6,6 +6,7 @@ public class GameEvents : Singleton<GameEvents> {
 
 	public GladiatorUser gladiatorUser;
 	public GladiatorAI gladiatorAI;
+	public GladiatorStatusBar gladiatorUserLifeBar, gladiatorUserStaminaBar, gladiatorAILifeBar, gladiatorAIStaminaBar;
 	public bool ready, start;
 	public float fightTime, fightClashTime = 5;
 	// Use this for initialization

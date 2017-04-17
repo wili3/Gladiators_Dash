@@ -8,6 +8,11 @@ public class GladiatorAI : Gladiator {
 	void Start () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
+		GameEvents.Instance.gladiatorAILifeBar.owner = this;
+		GameEvents.Instance.gladiatorAIStaminaBar.owner = this;
+		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
+		GameEvents.Instance.gladiatorAIStaminaBar.UpdateBar ();
+		rival = GameEvents.Instance.gladiatorUser;
 		//animator.SetBool ("Searching", true);
 	}
 
@@ -40,13 +45,14 @@ public class GladiatorAI : Gladiator {
 			stamina -= 25;
 			animator.SetBool ("Blocking", true);
 		}
+		GameEvents.Instance.gladiatorAIStaminaBar.UpdateBar ();
 	}
 
 	public void DrawAttackType()
 	{
 		int rand = Random.Range (0, 100);
 
-		if (rand < 50) {
+		if (rand < 30) {
 			animator.SetBool ("Overhead", true);
 		} else {
 			animator.SetBool ("RightAttack", true);
@@ -64,6 +70,7 @@ public class GladiatorAI : Gladiator {
 
 		if (life < 0)
 			life = 0;
+		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
 	}
 
 	public override void DrawNextOption()

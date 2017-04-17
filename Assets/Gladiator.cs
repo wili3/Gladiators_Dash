@@ -17,4 +17,6 @@ public abstract class Gladiator : MonoBehaviour
 	public NextOption nextOption;
 	public Animator animator;
 	public float attackChances, defenseChances, stamina, life;
+	public Transform bloodPosition, shieldPosition;
+	public Gladiator rival;
 }
