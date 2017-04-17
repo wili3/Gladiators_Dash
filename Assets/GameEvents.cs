@@ -7,6 +7,7 @@ public class GameEvents : Singleton<GameEvents> {
 	public GladiatorUser gladiatorUser;
 	public GladiatorAI gladiatorAI;
 	public bool ready, start;
+	public float fightTime, fightClashTime = 5;
 	// Use this for initialization
 	void Start () {
 		
@@ -16,6 +17,12 @@ public class GameEvents : Singleton<GameEvents> {
 	void Update () {
 		if (!ready) {
 			Search ();
+		}
+		if (gladiatorUser.state == Gladiator.State.Fighting) {
+			fightTime += Time.deltaTime;
+			if (fightTime >= fightClashTime) {
+				DrawGladiatorMoves ();
+			}
 		}
 	}
 
@@ -29,5 +36,16 @@ public class GameEvents : Singleton<GameEvents> {
 		} else {
 			ready = true;
 		}
+	}
+
+	public void DrawGladiatorMoves()
+	{
+		fightTime = 0;
+
+		gladiatorUser.DrawNextOption ();
+		gladiatorAI.DrawNextOption ();
+
+		gladiatorUser.Attack ();
+		gladiatorAI.Attack ();
 	}
 }
