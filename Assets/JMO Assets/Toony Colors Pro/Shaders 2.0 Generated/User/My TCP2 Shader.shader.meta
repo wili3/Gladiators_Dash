@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 82cccccbb7420f84097cb95618b19ffd
+timeCreated: 1492108250
+licenseType: Free
+ShaderImporter:
+  defaultTextures: []
+  userData: USER,FSPECULAR,FBUMP,FMASK1,FDETAIL_TEX,FDETAIL_MASK,FUSE_VFACE,FCUTOUT,FALPHA,KSHADER_TARGET:3.0,KCOLORMASK_CHANNEL:.a,KEMISSION_MASK_CHANNEL:.a,KDETAIL_MASK_CHANNEL:.a,KDETAIL_MASK:mask1,ch8D7E692C,cSM:30,cCF:TCP2_ShaderTemplate_Default
+  assetBundleName: 
+  assetBundleVariant: 

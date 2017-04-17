@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: e94d6d21a6ef24949bbf698e663d3750
+timeCreated: 1492394457
+licenseType: Free
+ShaderImporter:
+  defaultTextures: []
+  userData: USER,FCULL_OFF,FUSE_VFACE,FSPECULAR,FBUMP,FREFLECTION,FREFL_MASK,FMASK_MAINTEX,KSHADER_TARGET:3.0,KREFL_MASK:mainTex,KREFL_MASK_CHANNEL:.a,ch990194D6,cSM:30,cCF:TCP2_ShaderTemplate_Default
+  assetBundleName: 
+  assetBundleVariant: 
