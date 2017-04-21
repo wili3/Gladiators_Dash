@@ -16,7 +16,14 @@ public class Blood : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		if (animator.GetComponent<Gladiator> ().rival.nextOption == Gladiator.NextOption.Defense) {
+		if (animator.GetComponent<Gladiator> ().rival.nextOption == Gladiator.NextOption.DefenseOverhead && animator.GetComponent<Gladiator>().nextOption == Gladiator.NextOption.AttackOverhead) {
+			GameObject sparkles = Instantiate (sparklesPrefab) as GameObject;
+			sparkles.transform.SetParent (animator.GetComponent<Gladiator> ().rival.shieldPosition);
+			sparkles.transform.position = animator.GetComponent<Gladiator> ().rival.shieldPosition.position;
+			sparkles.transform.rotation = animator.GetComponent<Gladiator> ().rival.shieldPosition.rotation;
+			sparkles.transform.localScale = Vector3.one;
+		}
+		else if (animator.GetComponent<Gladiator> ().rival.nextOption == Gladiator.NextOption.DefenseRight && animator.GetComponent<Gladiator>().nextOption == Gladiator.NextOption.AttackRight) {
 			GameObject sparkles = Instantiate (sparklesPrefab) as GameObject;
 			sparkles.transform.SetParent (animator.GetComponent<Gladiator> ().rival.shieldPosition);
 			sparkles.transform.position = animator.GetComponent<Gladiator> ().rival.shieldPosition.position;

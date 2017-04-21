@@ -9,6 +9,7 @@ public class GameEvents : Singleton<GameEvents> {
 	public GladiatorStatusBar gladiatorUserLifeBar, gladiatorAILifeBar;
 	public bool ready, start;
 	public float fightTime, fightClashTime = 5;
+	public int turn;
 	// Use this for initialization
 	void Start () {
 		
@@ -43,10 +44,17 @@ public class GameEvents : Singleton<GameEvents> {
 	{
 		fightTime = 0;
 
-		gladiatorUser.DrawNextOption ();
-		gladiatorAI.DrawNextOption ();
+
+		if (turn % 2 == 0) {
+			gladiatorUser.DrawNextOption (true);
+			gladiatorAI.DrawNextOption (false);
+		} else {
+			gladiatorUser.DrawNextOption (false);
+			gladiatorAI.DrawNextOption (true);
+		}
 
 		gladiatorUser.Attack ();
 		gladiatorAI.Attack ();
+		turn++;
 	}
 }

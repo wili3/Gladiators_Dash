@@ -41,26 +41,36 @@ public class GladiatorUser : Gladiator {
 
 	public override void Attack()
 	{
-		if (nextOption == NextOption.Attack) {
-			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.Attack) {
+		if (nextOption == NextOption.AttackOverhead) {
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseRight) {
 				GameEvents.Instance.gladiatorAI.ReceiveDamage (25);
 				stamina -= 25;
 				DrawAttackType ();
-			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.Defense) {
+			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseOverhead) {
 				stamina -= 50;
 				DrawAttackType ();
 			}
-		} else if (nextOption == NextOption.Defense) {
+		} else if (nextOption == NextOption.AttackRight) {
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseOverhead) {
+				GameEvents.Instance.gladiatorAI.ReceiveDamage (25);
+				stamina -= 25;
+				DrawAttackType ();
+			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseRight) {
+				stamina -= 50;
+				DrawAttackType ();
+			}
+		} else if (nextOption == NextOption.DefenseOverhead) {
 			stamina -= 25;
-			animator.SetBool ("Blocking", true);
+			animator.SetBool ("BlockingOverhead", true);
+		} else if (nextOption == NextOption.DefenseRight) {
+			stamina -= 25;
+			animator.SetBool ("BlockingRight", true);
 		}
 	}
 
 	public void DrawAttackType()
 	{
-		int rand = Random.Range (0, 100);
-
-		if (rand < 50) {
+		if (nextOption == NextOption.AttackOverhead) {
 			animator.SetBool ("Overhead", true);
 		} else {
 			animator.SetBool ("RightAttack", true);
@@ -81,14 +91,36 @@ public class GladiatorUser : Gladiator {
 		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
 	}
 		
-	public override void DrawNextOption()
+	public override void DrawNextOption(bool attack)
 	{
-		int rand = Random.Range (0, 100);
+		int rand = 0;
 
-		if (rand < 30) {
-			nextOption = NextOption.Defense;
-		} else {
-			nextOption = NextOption.Attack;
+		if (attack) 
+		{
+			rand = Random.Range (0, 100);
+
+			if (rand > 50) 
+			{
+				nextOption = NextOption.AttackOverhead;
+			}
+			else 
+			{
+				nextOption = NextOption.AttackRight;
+			}
+
+		}
+		else 
+		{
+			rand = Random.Range (0, 100);
+
+			if (rand > 50) 
+			{
+				nextOption = NextOption.DefenseOverhead;
+			}
+			else 
+			{
+				nextOption = NextOption.DefenseRight;
+			}
 		}
 	}
 }
