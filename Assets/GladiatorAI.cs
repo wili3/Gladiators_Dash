@@ -9,9 +9,7 @@ public class GladiatorAI : Gladiator {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
 		GameEvents.Instance.gladiatorAILifeBar.owner = this;
-		GameEvents.Instance.gladiatorAIStaminaBar.owner = this;
 		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
-		GameEvents.Instance.gladiatorAIStaminaBar.UpdateBar ();
 		rival = GameEvents.Instance.gladiatorUser;
 		//animator.SetBool ("Searching", true);
 	}
@@ -45,7 +43,6 @@ public class GladiatorAI : Gladiator {
 			stamina -= 25;
 			animator.SetBool ("Blocking", true);
 		}
-		GameEvents.Instance.gladiatorAIStaminaBar.UpdateBar ();
 	}
 
 	public void DrawAttackType()
