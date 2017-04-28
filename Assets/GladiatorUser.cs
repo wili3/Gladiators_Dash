@@ -45,35 +45,35 @@ public class GladiatorUser : Gladiator {
 			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseRight) {
 				GameEvents.Instance.gladiatorAI.ReceiveDamage (25);
 				stamina -= 25;
-				DrawAttackType ();
+				DrawAttackType (false);
 			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseOverhead) {
 				stamina -= 50;
-				DrawAttackType ();
+				DrawAttackType (true);
+
 			}
 		} else if (nextOption == NextOption.AttackRight) {
 			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseOverhead) {
 				GameEvents.Instance.gladiatorAI.ReceiveDamage (25);
 				stamina -= 25;
-				DrawAttackType ();
+				DrawAttackType (false);
 			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseRight) {
 				stamina -= 50;
-				DrawAttackType ();
+				DrawAttackType (true);
 			}
 		} else if (nextOption == NextOption.DefenseOverhead) {
 			stamina -= 25;
-			animator.SetBool ("BlockingOverhead", true);
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.AttackOverhead) {
+				DrawDefenseType (true);
+			} else {
+				DrawDefenseType (false);
+			}
 		} else if (nextOption == NextOption.DefenseRight) {
 			stamina -= 25;
-			animator.SetBool ("BlockingRight", true);
-		}
-	}
-
-	public void DrawAttackType()
-	{
-		if (nextOption == NextOption.AttackOverhead) {
-			animator.SetBool ("Overhead", true);
-		} else {
-			animator.SetBool ("RightAttack", true);
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.AttackRight) {
+				DrawDefenseType (true);
+			} else {
+				DrawDefenseType (false);
+			}
 		}
 	}
 
