@@ -463,7 +463,7 @@ ModelImporter:
       name: Idle
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 76
+      lastFrame: 330
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -636,8 +636,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle 2
       takeName: Take 001
-      firstFrame: 70
-      lastFrame: 105
+      firstFrame: 0
+      lastFrame: 330
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -810,8 +810,8 @@ ModelImporter:
     - serializedVersion: 16
       name: OverheadAttack
       takeName: Take 001
-      firstFrame: 143
-      lastFrame: 151
+      firstFrame: 331
+      lastFrame: 406
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1002,8 +1002,8 @@ ModelImporter:
     - serializedVersion: 16
       name: RightAttack
       takeName: Take 001
-      firstFrame: 152
-      lastFrame: 159
+      firstFrame: 331
+      lastFrame: 406
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1386,8 +1386,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Shielding
       takeName: Take 001
-      firstFrame: 153
-      lastFrame: 154
+      firstFrame: 462
+      lastFrame: 522
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
