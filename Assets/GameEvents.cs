@@ -13,7 +13,7 @@ public class GameEvents : Singleton<GameEvents> {
 	public int turn;
 	// Use this for initialization
 	void Start () {
-		
+		gladiatorAI.Initialize ();
 	}
 	
 	// Update is called once per frame

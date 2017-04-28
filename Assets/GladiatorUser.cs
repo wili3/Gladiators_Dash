@@ -5,13 +5,15 @@ using UnityEngine;
 public class GladiatorUser : Gladiator {
 
 	// Use this for initialization
-	void Start () {
+	public void Initialize () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
 		GameEvents.Instance.gladiatorUserLifeBar.owner = this;
 		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
 		rival = GameEvents.Instance.gladiatorAI;
-		//animator.SetBool ("Searching", true);
+		animator.SetBool ("Searching", true);
+		if (GameEvents.Instance.gladiatorAI != null)
+			GameEvents.Instance.gladiatorAI.rival = this;
 	}
 	
 	// Update is called once per frame

@@ -5,13 +5,15 @@ using UnityEngine;
 public class GladiatorAI : Gladiator {
 
 	// Use this for initialization
-	void Start () {
+	public void Initialize () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
 		GameEvents.Instance.gladiatorAILifeBar.owner = this;
 		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
 		rival = GameEvents.Instance.gladiatorUser;
-		//animator.SetBool ("Searching", true);
+		animator.SetBool ("Searching", true);
+		if (GameEvents.Instance.gladiatorUser != null)
+			GameEvents.Instance.gladiatorUser.rival = this;
 	}
 
 	// Update is called once per frame
@@ -26,6 +28,17 @@ public class GladiatorAI : Gladiator {
 		rotation += Time.deltaTime;
 		transform.position += (transform.forward * speed * Time.deltaTime);
 		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.gladiatorUser.transform.position - transform.position), rotation);
+		if (Vector3.Distance (transform.position, GameEvents.Instance.gladiatorUser.transform.position) < 2f)
+		{
+			GameEvents.Instance.gladiatorUser.ready = true;
+			GameEvents.Instance.gladiatorUser.state = State.Fighting;
+			ready = true;
+			state = State.Fighting;
+			animator.SetBool ("Searching", false);
+			animator.SetBool ("Fighting", true);
+			GameEvents.Instance.gladiatorUser.animator.SetBool ("Searching", false);
+			GameEvents.Instance.gladiatorUser.animator.SetBool ("Fighting", true);
+		}
 	}
 
 	public override void Attack()
