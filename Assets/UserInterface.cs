@@ -22,6 +22,20 @@ public class UserInterface : Singleton<UserInterface> {
 		if (GameEvents.Instance.gladiatorUser == null) {
 			GameEvents.Instance.gladiatorUser = gladiators [num];
 			GameEvents.Instance.gladiatorUser.Initialize ();
+		} else {
+			GameEvents.Instance.gladiatorUser.state = Gladiator.State.Switching;
+			GameEvents.Instance.gladiatorUser.id = num;
+			GameEvents.Instance.gladiatorUser.rival.switched = true;
+			GameEvents.Instance.gladiatorUser.ready = false;
+			GameEvents.Instance.ready = false;
+			GameEvents.Instance.gladiatorUser.animator.SetBool ("Fighting", false);
+			GameEvents.Instance.gladiatorUser.animator.SetBool ("Searching", true);
 		}
+	}
+
+	public void SwitchCard(int num)
+	{
+		GameEvents.Instance.gladiatorUser = gladiators [num];
+		GameEvents.Instance.gladiatorUser.Initialize ();
 	}
 }

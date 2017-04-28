@@ -18,8 +18,13 @@ public class GameEvents : Singleton<GameEvents> {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if (gladiatorUser == null || gladiatorAI == null)
 			return;
+
+		if (gladiatorUser.state == Gladiator.State.Switching) {
+			gladiatorUser.Switch ();
+		}
 		if (!ready) {
 			Search ();
 		}
@@ -33,12 +38,16 @@ public class GameEvents : Singleton<GameEvents> {
 
 	void Search()
 	{
-		if (!start)
+		if (!start || gladiatorUser.state == Gladiator.State.Switching || gladiatorAI.state == Gladiator.State.Switching)
 			return;
 		if (!gladiatorUser.ready) {
 			gladiatorUser.Search ();
+		}
+		if (!gladiatorAI.ready) {
 			gladiatorAI.Search ();
-		} else {
+		}
+
+		if (gladiatorUser.ready && gladiatorAI.ready) {
 			ready = true;
 		}
 	}

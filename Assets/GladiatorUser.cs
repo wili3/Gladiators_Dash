@@ -12,8 +12,11 @@ public class GladiatorUser : Gladiator {
 		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
 		rival = GameEvents.Instance.gladiatorAI;
 		animator.SetBool ("Searching", true);
-		if (GameEvents.Instance.gladiatorAI != null)
+		switched = false;
+		if (GameEvents.Instance.gladiatorAI != null) {
 			GameEvents.Instance.gladiatorAI.rival = this;
+			GameEvents.Instance.gladiatorAI.switched = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -123,6 +126,17 @@ public class GladiatorUser : Gladiator {
 			{
 				nextOption = NextOption.DefenseRight;
 			}
+		}
+	}
+
+	public void Switch()
+	{
+		rotation += Time.deltaTime;
+		transform.position += (transform.forward * speed * Time.deltaTime);
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.houseUser.position - transform.position), rotation);
+		if (Vector3.Distance (transform.position, GameEvents.Instance.houseUser.position) < 0.1f) 
+		{
+			UserInterface.Instance.SwitchCard (id);
 		}
 	}
 }
