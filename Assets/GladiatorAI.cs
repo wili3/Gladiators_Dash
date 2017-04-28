@@ -5,13 +5,15 @@ using UnityEngine;
 public class GladiatorAI : Gladiator {
 
 	// Use this for initialization
-	void Start () {
+	public void Initialize () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
 		GameEvents.Instance.gladiatorAILifeBar.owner = this;
 		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
 		rival = GameEvents.Instance.gladiatorUser;
-		//animator.SetBool ("Searching", true);
+		animator.SetBool ("Searching", true);
+		if (GameEvents.Instance.gladiatorUser != null)
+			GameEvents.Instance.gladiatorUser.rival = this;
 	}
 
 	// Update is called once per frame
@@ -26,33 +28,53 @@ public class GladiatorAI : Gladiator {
 		rotation += Time.deltaTime;
 		transform.position += (transform.forward * speed * Time.deltaTime);
 		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.gladiatorUser.transform.position - transform.position), rotation);
+		if (Vector3.Distance (transform.position, GameEvents.Instance.gladiatorUser.transform.position) < 2f)
+		{
+			GameEvents.Instance.gladiatorUser.ready = true;
+			GameEvents.Instance.gladiatorUser.state = State.Fighting;
+			ready = true;
+			state = State.Fighting;
+			animator.SetBool ("Searching", false);
+			animator.SetBool ("Fighting", true);
+			GameEvents.Instance.gladiatorUser.animator.SetBool ("Searching", false);
+			GameEvents.Instance.gladiatorUser.animator.SetBool ("Fighting", true);
+		}
 	}
 
 	public override void Attack()
 	{
-		if (nextOption == NextOption.Attack) {
-			if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.Attack) {
+		if (nextOption == NextOption.AttackOverhead) {
+			if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.DefenseRight) {
 				GameEvents.Instance.gladiatorUser.ReceiveDamage (25);
 				stamina -= 25;
-				DrawAttackType ();
-			} else if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.Defense) {
+				DrawAttackType (false);
+			} else if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.DefenseOverhead) {
 				stamina -= 50;
-				DrawAttackType ();
+				DrawAttackType (true);
 			}
-		} else if (nextOption == NextOption.Defense) {
+		} else if (nextOption == NextOption.AttackRight) {
+			if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.DefenseOverhead) {
+				GameEvents.Instance.gladiatorUser.ReceiveDamage (25);
+				stamina -= 25;
+				DrawAttackType (false);
+			} else if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.DefenseRight) {
+				stamina -= 50;
+				DrawAttackType (true);
+			}
+		} else if (nextOption == NextOption.DefenseOverhead) {
 			stamina -= 25;
-			animator.SetBool ("Blocking", true);
-		}
-	}
-
-	public void DrawAttackType()
-	{
-		int rand = Random.Range (0, 100);
-
-		if (rand < 30) {
-			animator.SetBool ("Overhead", true);
-		} else {
-			animator.SetBool ("RightAttack", true);
+			if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.AttackOverhead) {
+				DrawDefenseType (true);
+			} else {
+				DrawDefenseType (false);
+			}
+		} else if (nextOption == NextOption.DefenseRight) {
+			stamina -= 25;
+			if (GameEvents.Instance.gladiatorUser.nextOption == NextOption.AttackRight) {
+				DrawDefenseType (true);
+			} else {
+				DrawDefenseType (false);
+			}
 		}
 	}
 
@@ -70,14 +92,36 @@ public class GladiatorAI : Gladiator {
 		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
 	}
 
-	public override void DrawNextOption()
+	public override void DrawNextOption(bool attack)
 	{
-		int rand = Random.Range (0, 100);
+		int rand = 0;
 
-		if (rand < 50) {
-			nextOption = NextOption.Defense;
-		} else {
-			nextOption = NextOption.Attack;
+		if (attack) 
+		{
+			rand = Random.Range (0, 100);
+
+			if (rand > 50) 
+			{
+				nextOption = NextOption.AttackOverhead;
+			}
+			else 
+			{
+				nextOption = NextOption.AttackRight;
+			}
+
+		}
+		else 
+		{
+			rand = Random.Range (0, 100);
+
+			if (rand > 50) 
+			{
+				nextOption = NextOption.DefenseOverhead;
+			}
+			else 
+			{
+				nextOption = NextOption.DefenseRight;
+			}
 		}
 	}
 

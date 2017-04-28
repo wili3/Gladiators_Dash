@@ -5,13 +5,18 @@ using UnityEngine;
 public class GladiatorUser : Gladiator {
 
 	// Use this for initialization
-	void Start () {
+	public void Initialize () {
 		state = State.Searching;
 		animator = this.GetComponent<Animator>();
 		GameEvents.Instance.gladiatorUserLifeBar.owner = this;
 		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
 		rival = GameEvents.Instance.gladiatorAI;
-		//animator.SetBool ("Searching", true);
+		animator.SetBool ("Searching", true);
+		switched = false;
+		if (GameEvents.Instance.gladiatorAI != null) {
+			GameEvents.Instance.gladiatorAI.rival = this;
+			GameEvents.Instance.gladiatorAI.switched = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -26,7 +31,7 @@ public class GladiatorUser : Gladiator {
 		rotation += Time.deltaTime;
 		transform.position += (transform.forward * speed * Time.deltaTime);
 		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.gladiatorAI.transform.position - transform.position), rotation);
-		if (Vector3.Distance (transform.position, GameEvents.Instance.gladiatorAI.transform.position) < 1.6f)
+		if (Vector3.Distance (transform.position, GameEvents.Instance.gladiatorAI.transform.position) < 2f)
 		{
 			GameEvents.Instance.gladiatorAI.ready = true;
 			GameEvents.Instance.gladiatorAI.state = State.Fighting;
@@ -41,29 +46,39 @@ public class GladiatorUser : Gladiator {
 
 	public override void Attack()
 	{
-		if (nextOption == NextOption.Attack) {
-			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.Attack) {
+		if (nextOption == NextOption.AttackOverhead) {
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseRight) {
 				GameEvents.Instance.gladiatorAI.ReceiveDamage (25);
 				stamina -= 25;
-				DrawAttackType ();
-			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.Defense) {
+				DrawAttackType (false);
+			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseOverhead) {
 				stamina -= 50;
-				DrawAttackType ();
+				DrawAttackType (true);
+
 			}
-		} else if (nextOption == NextOption.Defense) {
+		} else if (nextOption == NextOption.AttackRight) {
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseOverhead) {
+				GameEvents.Instance.gladiatorAI.ReceiveDamage (25);
+				stamina -= 25;
+				DrawAttackType (false);
+			} else if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.DefenseRight) {
+				stamina -= 50;
+				DrawAttackType (true);
+			}
+		} else if (nextOption == NextOption.DefenseOverhead) {
 			stamina -= 25;
-			animator.SetBool ("Blocking", true);
-		}
-	}
-
-	public void DrawAttackType()
-	{
-		int rand = Random.Range (0, 100);
-
-		if (rand < 50) {
-			animator.SetBool ("Overhead", true);
-		} else {
-			animator.SetBool ("RightAttack", true);
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.AttackOverhead) {
+				DrawDefenseType (true);
+			} else {
+				DrawDefenseType (false);
+			}
+		} else if (nextOption == NextOption.DefenseRight) {
+			stamina -= 25;
+			if (GameEvents.Instance.gladiatorAI.nextOption == NextOption.AttackRight) {
+				DrawDefenseType (true);
+			} else {
+				DrawDefenseType (false);
+			}
 		}
 	}
 
@@ -81,14 +96,47 @@ public class GladiatorUser : Gladiator {
 		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
 	}
 		
-	public override void DrawNextOption()
+	public override void DrawNextOption(bool attack)
 	{
-		int rand = Random.Range (0, 100);
+		int rand = 0;
 
-		if (rand < 30) {
-			nextOption = NextOption.Defense;
-		} else {
-			nextOption = NextOption.Attack;
+		if (attack) 
+		{
+			rand = Random.Range (0, 100);
+
+			if (rand > 50) 
+			{
+				nextOption = NextOption.AttackOverhead;
+			}
+			else 
+			{
+				nextOption = NextOption.AttackRight;
+			}
+
+		}
+		else 
+		{
+			rand = Random.Range (0, 100);
+
+			if (rand > 50) 
+			{
+				nextOption = NextOption.DefenseOverhead;
+			}
+			else 
+			{
+				nextOption = NextOption.DefenseRight;
+			}
+		}
+	}
+
+	public void Switch()
+	{
+		rotation += Time.deltaTime;
+		transform.position += (transform.forward * speed * Time.deltaTime);
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.houseUser.position - transform.position), rotation);
+		if (Vector3.Distance (transform.position, GameEvents.Instance.houseUser.position) < 0.1f) 
+		{
+			UserInterface.Instance.SwitchCard (id);
 		}
 	}
 }

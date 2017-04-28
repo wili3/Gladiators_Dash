@@ -8,16 +8,17 @@ public class GladiatorStatusBar : MonoBehaviour {
 	public Image filledImage;
 	public Gladiator owner;
 	public bool isStamina;
+	public float totalLife = 100;
 
 	public void UpdateBar()
 	{
 		if (!isStamina) 
 		{
-			filledImage.fillAmount = owner.life / 100;
+			filledImage.fillAmount = owner.life / totalLife;
 		}
 		else 
 		{
-			filledImage.fillAmount = owner.stamina / 100;
+			filledImage.fillAmount = owner.stamina / totalLife;
 		}
 	}
 }
