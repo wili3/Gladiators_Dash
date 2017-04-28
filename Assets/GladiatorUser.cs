@@ -26,7 +26,7 @@ public class GladiatorUser : Gladiator {
 		rotation += Time.deltaTime;
 		transform.position += (transform.forward * speed * Time.deltaTime);
 		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.gladiatorAI.transform.position - transform.position), rotation);
-		if (Vector3.Distance (transform.position, GameEvents.Instance.gladiatorAI.transform.position) < 1.6f)
+		if (Vector3.Distance (transform.position, GameEvents.Instance.gladiatorAI.transform.position) < 2f)
 		{
 			GameEvents.Instance.gladiatorAI.ready = true;
 			GameEvents.Instance.gladiatorAI.state = State.Fighting;
