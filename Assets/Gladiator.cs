@@ -20,6 +20,7 @@ public abstract class Gladiator : MonoBehaviour
 	public Transform bloodPosition, shieldPosition;
 	public Gladiator rival;
 	public int id;
+	public bool switched;
 
 	public void DrawAttackType(bool defended)
 	{
