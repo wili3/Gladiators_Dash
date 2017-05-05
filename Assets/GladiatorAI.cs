@@ -76,6 +76,7 @@ public class GladiatorAI : Gladiator {
 				DrawDefenseType (false);
 			}
 		}
+		animator.SetBool ("Attacking", true);
 	}
 
 	public override void Die()

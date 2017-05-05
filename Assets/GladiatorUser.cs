@@ -80,20 +80,29 @@ public class GladiatorUser : Gladiator {
 				DrawDefenseType (false);
 			}
 		}
+		animator.SetBool ("Attacking", true);
 	}
 
 	public override void Die()
 	{
-
+		rival.switched = true;
+		animator.SetBool ("Dead", true);
+		UserInterface.Instance.skullImages [idGladiator].color = Color.gray;
+		UserInterface.Instance.cards [idGladiator].gameObject.SetActive (false);
+		life = 0;
+		state = State.Dead;
+		GameEvents.Instance.gladiatorUser = null;
+		GameEvents.Instance.ready = false;
 	}
 
 	public override void ReceiveDamage(int damage)
 	{
 		life -= damage;
-
-		if (life < 0)
-			life = 0;
 		GameEvents.Instance.gladiatorUserLifeBar.UpdateBar ();
+
+		if (life <= 0) {
+			Die ();
+		}
 	}
 		
 	public override void DrawNextOption(bool attack)
