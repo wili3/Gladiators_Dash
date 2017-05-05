@@ -87,6 +87,7 @@ public class GladiatorUser : Gladiator {
 	{
 		Attack ();
 		rival.switched = true;
+		rival.animator.SetBool ("Victory", true);
 		animator.SetBool ("Dead", true);
 		UserInterface.Instance.skullImages [idGladiator].color = Color.gray;
 		UserInterface.Instance.cards [idGladiator].gameObject.SetActive (false);

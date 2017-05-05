@@ -82,6 +82,7 @@ public class GladiatorAI : Gladiator {
 	public override void Die()
 	{
 		rival.switched = true;
+		rival.animator.SetBool ("Victory", true);
 		animator.SetBool ("Dead", true);
 		EnemyInterface.Instance.skullImages [idGladiator].color = Color.gray;
 		life = 0;
