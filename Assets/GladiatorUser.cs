@@ -85,6 +85,7 @@ public class GladiatorUser : Gladiator {
 
 	public override void Die()
 	{
+		Attack ();
 		rival.switched = true;
 		animator.SetBool ("Dead", true);
 		UserInterface.Instance.skullImages [idGladiator].color = Color.gray;
@@ -93,6 +94,7 @@ public class GladiatorUser : Gladiator {
 		state = State.Dead;
 		GameEvents.Instance.gladiatorUser = null;
 		GameEvents.Instance.ready = false;
+
 	}
 
 	public override void ReceiveDamage(int damage)

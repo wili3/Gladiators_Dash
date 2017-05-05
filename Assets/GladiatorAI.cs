@@ -81,16 +81,23 @@ public class GladiatorAI : Gladiator {
 
 	public override void Die()
 	{
-
+		rival.switched = true;
+		animator.SetBool ("Dead", true);
+		EnemyInterface.Instance.skullImages [idGladiator].color = Color.gray;
+		life = 0;
+		state = State.Dead;
+		GameEvents.Instance.gladiatorAI = null;
+		GameEvents.Instance.ready = false;
+		Attack ();
 	}
 
 	public override void ReceiveDamage(int damage)
 	{
 		life -= damage;
-
-		if (life < 0)
-			life = 0;
 		GameEvents.Instance.gladiatorAILifeBar.UpdateBar ();
+		if (life <= 0) {
+			Die ();
+		}
 	}
 
 	public override void DrawNextOption(bool attack)
@@ -132,5 +139,16 @@ public class GladiatorAI : Gladiator {
 
 		if (life < 0)
 			life = 0;
+	}
+
+	public void Switch()
+	{
+		rotation += Time.deltaTime;
+		transform.position += (transform.forward * speed * Time.deltaTime);
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (GameEvents.Instance.houseAI.position - transform.position), rotation);
+		if (Vector3.Distance (transform.position, GameEvents.Instance.houseAI.position) < 0.1f) 
+		{
+			EnemyInterface.Instance.SwitchCard (id);
+		}
 	}
 }

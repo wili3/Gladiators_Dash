@@ -13,7 +13,7 @@ public class GameEvents : Singleton<GameEvents> {
 	public int turn;
 	// Use this for initialization
 	void Start () {
-		gladiatorAI.Initialize ();
+		//gladiatorAI.Initialize ();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +24,9 @@ public class GameEvents : Singleton<GameEvents> {
 
 		if (gladiatorUser.state == Gladiator.State.Switching) {
 			gladiatorUser.Switch ();
+		}
+		if (gladiatorAI.state == Gladiator.State.Switching) {
+			gladiatorAI.Switch ();
 		}
 		if (!ready) {
 			Search ();
@@ -66,7 +69,7 @@ public class GameEvents : Singleton<GameEvents> {
 		}
 
 		gladiatorUser.Attack ();
-		gladiatorAI.Attack ();
+		if(gladiatorAI != null)gladiatorAI.Attack ();
 		turn++;
 	}
 }
