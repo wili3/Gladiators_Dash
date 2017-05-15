@@ -294,8 +294,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Run
       takeName: Take 001
-      firstFrame: 911
-      lastFrame: 969
+      firstFrame: 950
+      lastFrame: 989
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1584,8 +1584,8 @@ ModelImporter:
     - serializedVersion: 16
       name: RightDefense_01_ok
       takeName: Take 001
-      firstFrame: 876
-      lastFrame: 909
+      firstFrame: 871
+      lastFrame: 901
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1776,8 +1776,8 @@ ModelImporter:
     - serializedVersion: 16
       name: RightDefense_01_fail
       takeName: Take 001
-      firstFrame: 876
-      lastFrame: 909
+      firstFrame: 899
+      lastFrame: 947
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1969,7 +1969,7 @@ ModelImporter:
       name: RightAttack_01_ok
       takeName: Take 001
       firstFrame: 788
-      lastFrame: 841
+      lastFrame: 840
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2160,8 +2160,8 @@ ModelImporter:
     - serializedVersion: 16
       name: RightAttack_01_fail
       takeName: Take 001
-      firstFrame: 850
-      lastFrame: 879
+      firstFrame: 839
+      lastFrame: 866
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2352,8 +2352,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Death_01
       takeName: Take 001
-      firstFrame: 970
-      lastFrame: 1047
+      firstFrame: 1009
+      lastFrame: 1086
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2544,8 +2544,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Win_01
       takeName: Take 001
-      firstFrame: 1049
-      lastFrame: 1125
+      firstFrame: 1087.07
+      lastFrame: 1164
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
