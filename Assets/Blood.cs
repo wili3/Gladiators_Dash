@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Blood : StateMachineBehaviour {
-	public GameObject bloodPrefab, sparklesPrefab;
+	public GameObject bloodPrefab, sparklesPrefab, bloodSound, shieldSound;
 	public float sparklesTime = 0.39f, bloodTime = 0.43f;
 	public bool defended, instantiated;
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -28,6 +28,12 @@ public class Blood : StateMachineBehaviour {
 				sparkles.transform.position = animator.GetComponent<Gladiator> ().rival.shieldPosition.position;
 				sparkles.transform.rotation = animator.GetComponent<Gladiator> ().rival.shieldPosition.rotation;
 				sparkles.transform.localScale = Vector3.one;
+
+				GameObject sparklesSound = Instantiate (shieldSound) as GameObject;
+				sparklesSound.transform.SetParent (animator.GetComponent<Gladiator> ().rival.shieldPosition);
+				sparklesSound.transform.position = animator.GetComponent<Gladiator> ().rival.shieldPosition.position;
+				sparklesSound.transform.rotation = animator.GetComponent<Gladiator> ().rival.shieldPosition.rotation;
+				sparklesSound.transform.localScale = Vector3.one;
 				instantiated = true;
 			} else {
 				if (stateInfo.normalizedTime > bloodTime) {
@@ -36,6 +42,12 @@ public class Blood : StateMachineBehaviour {
 					blood.transform.position = animator.GetComponent<Gladiator> ().rival.bloodPosition.position;
 					blood.transform.rotation = animator.GetComponent<Gladiator> ().rival.bloodPosition.rotation;
 					blood.transform.localScale = Vector3.one * 2;
+
+					GameObject bloodSnd = Instantiate (bloodSound) as GameObject;
+					bloodSnd.transform.SetParent (animator.GetComponent<Gladiator> ().rival.shieldPosition);
+					bloodSnd.transform.position = animator.GetComponent<Gladiator> ().rival.shieldPosition.position;
+					bloodSnd.transform.rotation = animator.GetComponent<Gladiator> ().rival.shieldPosition.rotation;
+					bloodSnd.transform.localScale = Vector3.one;
 					instantiated = true;
 				}
 			}
